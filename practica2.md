@@ -5,6 +5,7 @@
 - **Edad:** 21
 - **Fotografía:**  
 
+![WhatsApp Image 2025-02-25 at 2 44 46 PM](https://github.com/user-attachments/assets/992ebf16-55b0-427f-845a-524fe0b8da1e)
 
 ## Presentación
 Hola, mi nombre es Roberto Vilchis. Actualmente estudio Ing en ciberseguridad en amerike. Me considero una persona divertida, alegre, inteligente pero sobre todo hermoso.
