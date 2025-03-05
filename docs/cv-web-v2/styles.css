@@ -1,0 +1,57 @@
+/* 1. Configuración general */
+html {
+    font-size: 100%;
+}
+body {
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* 2. Hacer imágenes responsivas */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 3. Diseño de la cuadrícula */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+/* 4. Estilos generales */
+header {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+nav {
+    text-align: center;
+    margin-top: 10px;
+}
+nav a {
+    margin: 10px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+}
+
+/* 5. Diseño responsive con Media Queries */
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+}
