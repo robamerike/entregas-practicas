@@ -5,3 +5,6 @@
 ## Índice de prácticas
 - [Práctica 1 - Presentación](URL_DE_LA_PRESENTACION)
 - [Práctica 2 - Datos personales](practica-2.md)
+- [Práctica 4 - Curriculum Web](https://robamerike.github.io/entregas-practicas/cv-web/)
+- [Práctica 5 - Curriculum con CSS](https://robamerike.github.io/entregas-practicas/cv-web/)
+- [Práctica 6 - Curriculum Web Responsivo](https://robamerike.github.io/entregas-practicas/cv-web-v2/)
