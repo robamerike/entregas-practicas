@@ -9,3 +9,4 @@
 - [Práctica 4 - Curriculum Web](https://robamerike.github.io/entregas-practicas/cv-web/)
 - [Práctica 5 - Curriculum con CSS](https://robamerike.github.io/entregas-practicas/cv-web/)
 - [Práctica 6 - Curriculum Web Responsivo](https://robamerike.github.io/entregas-practicas/cv-web-v2/)
+- [Práctica 7 - Simulador de Tienda JS](https://robarerike.github.io/entregas-practicas/practica-7/)
