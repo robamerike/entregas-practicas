@@ -13,3 +13,4 @@
 - [Práctica 8 - Tienda Web Interactiva con DOM y Eventos](https://robamerike.github.io/entregas-practicas/practica-8/)
 - [Práctica 9 - Registro de Usuario con Validación JS](https://robamerike.github.io/entregas-practicas/practica-9/)
 - [Práctica 10 - Tienda con datos de API](https://robamerike.github.io/entregas-practicas/practica-10/)
+- [Práctica 11 - Conceptualización del Proyecto Final: ContraINTEL](mi-app.md)
