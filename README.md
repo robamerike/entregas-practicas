@@ -15,3 +15,4 @@
 - [Práctica 10 - Tienda con datos de API](https://robamerike.github.io/entregas-practicas/practica-10/)
 - [Práctica 11 - Conceptualización del Proyecto Final: ContraINTEL](mi-app.md)
 - [Práctica 12 - Modelado de Datos de ContraINTEL](modelado-app.md)
+- [Práctica 13 - Cración de base de datos](modelado-app.md)
