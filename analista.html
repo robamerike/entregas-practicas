@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ContraINTEL - Analista</title>
+  <link rel="stylesheet" href="styles/main.css" />
+  <!-- zip.js para generar ZIP con contraseña -->
+  <script src="https://cdn.jsdelivr.net/npm/@zip.js/zip.js@2.7.26/dist/zip-full.min.js"></script>
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    const supabase = createClient('https://vjiohcqyxasxhdvrywlv.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZqaW9oY3F5eGFzeGhkdnJ5d2x2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk3NjQ4OTgsImV4cCI6MjA2NTM0MDg5OH0.O8hPp9RO4t6vXRUaf2Jz-Xxvpb0B8m6bsUPczH-nj70');
+
+    const tabla = document.getElementById('tabla-reportes');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    logoutBtn.addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      window.location.href = 'index.html';
+    });
+
+    async function descargarZipProtegido(nombreArchivo, contenidoBlob) {
+      const writer = new zip.ZipWriter(new zip.BlobWriter("application/zip"), {
+        password: "ContraINTEL2025"
+      });
+      await writer.add(nombreArchivo.split("/").pop(), new zip.BlobReader(contenidoBlob));
+      const zipBlob = await writer.close();
+
+      const url = URL.createObjectURL(zipBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `reporte-${nombreArchivo.split("/").pop()}.zip`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    async function cargarReportes() {
+      const { data, error } = await supabase.from('reportes').select('*');
+
+      if (error) {
+        alert('Error al cargar reportes: ' + error.message);
+        return;
+      }
+
+      tabla.innerHTML = '';
+
+      for (const r of data) {
+        const fecha = r.fecha_creacion || r.created_at;
+        const fechaFormateada = fecha ? new Date(fecha).toLocaleString() : '—';
+
+        tabla.innerHTML += `
+          <tr>
+            <td>${r.titulo}</td>
+            <td>${r.severidad}</td>
+            <td>${r.descripcion}</td>
+            <td>
+              <select data-id="${r.id}" class="estado-select">
+                <option ${r.estado === 'Nuevo' ? 'selected' : ''}>Nuevo</option>
+                <option ${r.estado === 'En análisis' ? 'selected' : ''}>En análisis</option>
+                <option ${r.estado === 'Resuelto' ? 'selected' : ''}>Resuelto</option>
+                <option ${r.estado === 'Falso positivo' ? 'selected' : ''}>Falso positivo</option>
+              </select>
+            </td>
+            <td>${fechaFormateada}</td>
+            <td>
+              ${r.archivo_nombre
+                ? `<button class="descargar-btn" data-ruta="${r.archivo_nombre}">Descargar</button>`
+                : '—'}
+            </td>
+          </tr>
+        `;
+      }
+
+      // Botones de descarga con zip protegido
+      document.querySelectorAll('.descargar-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          const ruta = e.target.getAttribute('data-ruta');
+          if (!ruta) return;
+
+          const { data, error } = await supabase
+            .storage
+            .from('reportes')
+            .download(ruta);
+
+          if (error) {
+            alert('Error al descargar: ' + error.message);
+            return;
+          }
+
+          await descargarZipProtegido(ruta, data);
+        });
+      });
+
+      // Cambio de estado
+      document.querySelectorAll('.estado-select').forEach(select => {
+        select.addEventListener('change', async (e) => {
+          const id = e.target.getAttribute('data-id');
+          const nuevoEstado = e.target.value;
+
+          const { error } = await supabase
+            .from('reportes')
+            .update({ estado: nuevoEstado })
+            .eq('id', id);
+
+          if (error) {
+            alert('Error al actualizar estado: ' + error.message);
+          } else {
+            alert('Estado actualizado');
+          }
+        });
+      });
+    }
+
+    cargarReportes();
+  </script>
+</head>
+<body>
+  <header>
+    <h1>ContraINTEL</h1>
+    <p>Panel del Analista</p>
+  </header>
+  <main>
+    <button id="logout-btn">Cerrar sesión</button>
+    <h2>Lista de Reportes</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Severidad</th>
+          <th>Descripción</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+          <th>Archivo</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-reportes"></tbody>
+    </table>
+  </main>
+</body>
+</html>
